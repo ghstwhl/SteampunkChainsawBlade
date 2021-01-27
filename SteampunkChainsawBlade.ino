@@ -1,5 +1,5 @@
 /* Chainsaw - For Pete's Steampunk Chainsaw
-*  
+*
 *  Copyright 2020 - Chris Knight - merlin@ghostwheel.com
 *  Released under the CC BY-NC-SA license: https://creativecommons.org/licenses/by-nc-sa/4.0/
 */
@@ -43,7 +43,7 @@ void setup()
   pinMode(2, INPUT_PULLUP); // 0 = rainbow mode
   pinMode(3, INPUT_PULLUP); // 0 = fire mode
   pinMode(4, INPUT_PULLUP); // 0 = set strip length
-  
+
   ACTIVELEDS = readSettingsFromEEPROM(MAXLEDS);
   hsvdrift = 360/ACTIVELEDS;
   setToBlack();
@@ -64,7 +64,7 @@ void loop()
       if ( 360 <= htemp ) {
         htemp -= 360;
       }
-      
+
     }
     ledStrip.write(colors, MAXLEDS, 12);
 
@@ -105,7 +105,7 @@ void loop()
     }
     delay(map(analogRead(A0), 1023, 0, 0, 80));
     lengthSetCheck();
-  }  
+  }
 }
 
 void lengthSetCheck() {
@@ -113,7 +113,7 @@ void lengthSetCheck() {
    * - This functiuon allows for on-the-fly setting of the active LEDs by way of a POT on A0
    * - Range is from 1 to MAXLEDS
    * - Once the button on D4 is released, the length is saved to EEPROM so it can be read
-   *   on the next boot. 
+   *   on the next boot.
    */
   if ( 0 == digitalRead(4) ) {
     while ( 0 == digitalRead(4) ) {
@@ -165,7 +165,7 @@ void HSVtoRGB(float h, float s, float v, byte *r, byte *g, byte *b) {
     /* grey */
     r_f = g_f = b_f = v;
   }
-  
+
   else {
     h /= 60.0;              /* Divide into 6 regions (0-5) */
     i = (int)floor( h );
@@ -207,14 +207,14 @@ void HSVtoRGB(float h, float s, float v, byte *r, byte *g, byte *b) {
         break;
     }
   }
-  
+
   *r = (byte)floor(r_f*255.99);
   *g = (byte)floor(g_f*255.99);
   *b = (byte)floor(b_f*255.99);
 }
 
 void setToBlack() {
-/* 
+/*
    Write 0,0,0 to all LESs twice, justr to make sure.  :)
 */
   for(uint16_t i = 0; i < MAXLEDS; i++) {
